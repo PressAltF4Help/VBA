@@ -1,0 +1,170 @@
+Option Explicit
+
+Sub tabuada()
+Dim cont As Integer, x As Integer, res As String
+x = Val(InputBox("Tabuada dos?"))
+res = "Tabuada dos " & x & vbNewLine    'valor inicial
+For cont = 1 To 10
+    res = res & x & " * " & cont & " = " & cont * x & vbNewLine
+Next    'cont = cont + 1
+MsgBox (res)
+End Sub
+Public Sub tabuadaN()
+    Dim cont As Integer, x As Integer, res As String
+    x = Val(InputBox("Tabuada dos?"))
+    Do Until (x < 0)
+        res = "Tabuada dos " & x & vbNewLine    'valor inicial
+        For cont = 1 To 10
+            res = res & x & " * " & cont & " = " & cont * x & vbNewLine
+        Next    'cont = cont + 1
+        If (x < 0) Then
+            res = "Erro"
+        End If
+        MsgBox (res)
+    Loop
+End Sub
+
+Public Sub numPar()
+    Dim n As Integer, resDecresc As String, rescresc As String, i As Integer
+
+    resDecresc = ""
+    n = -1
+    Do While (n < 0 Or n > 30)
+        n = Val(InputBox("Digite um número(0-30)"))
+    Loop
+    For i = n To 1 Step -1
+        If (i Mod 2 = 0) Then
+            resDecresc = resDecresc & i & vbNewLine
+        End If
+    Next
+    For i = 1 To n
+        If (i Mod 2 = 0) Then
+            rescresc = rescresc & i & vbNewLine
+        End If
+    Next
+
+
+    MsgBox resDecresc, , "DECRESCENTE"
+    MsgBox rescresc, , "CRESCENTE"
+End Sub
+
+Public Sub fatorial()
+    Dim n As Integer, contador As Integer, fatorial As Integer, num As Integer
+    
+    n = Val(InputBox("Numero"))
+    fatorial = Cells(3 + contador, "C")
+    
+    For contador = 1 To n
+        For num = (Cells(3 + contador, "C") - 1) To 1 Step -1
+            If (Cells(3 + contador, "C") <> 0) Then
+                fatorial = fatorial * num
+            Else
+                fatorial = 1
+            End If
+        Next
+        Cells(3 + contador, "C") = contador
+        Cells(3 + contador, "D") = fatorial
+    Next
+End Sub
+
+Sub Fibonnaci()
+     Dim numOrdem As Integer, i As Integer, Termo As Integer, termoMedio As Integer, termoFinal As Integer, res As String
+     
+     numOrdem = Val(InputBox("Numero?"))
+     Termo = 0
+     termoMedio = 1
+     For i = 0 To numOrdem
+        If (i = 0) Then
+            termoFinal = Termo
+            res = termoFinal & vbNewLine
+        ElseIf (i = 1) Then
+            termoFinal = termoMedio
+            res = res & termoFinal & vbNewLine
+        Else
+            termoFinal = Termo + termoMedio
+            Termo = termoMedio
+            termoMedio = termoFinal
+            res = res & termoFinal & vbNewLine
+        End If
+     Next
+     MsgBox res, , "Sequencia de Fibonnaci até ao termo" & numOrdem
+End Sub
+
+Sub Selecao()
+    Dim area As Range
+    Dim num As Range, numRand As Integer
+    Set area = Selection
+    
+    For Each num In area
+        numRand = WorksheetFunction.RandBetween(1, 100)
+        num.Value = numRand
+    Next
+    
+End Sub
+
+Sub primos()
+    Dim num As Integer, i As Integer, divisores As Integer, res As String, numVerificar As Integer, a As Integer
+
+    num = Val(InputBox("Numero: "))
+    res = "Primos " & vbNewLine
+    divisores = 0
+    For i = num To 1 Step -1
+        For numVerificar = i To 1 Step -1
+            If (i Mod numVerificar = 0) Then
+                divisores = divisores + 1
+            End If
+        Next
+        If (divisores = 2) Then
+            res = res & i & vbNewLine
+        End If
+        divisores = 0
+    Next
+    MsgBox (res)
+
+    
+End Sub
+
+Sub Banco()
+    Dim n As Double, q As Double, j As Double, montante As Double, i As Integer
+    
+    q = InputBox("Quantia depositada ?")
+    n = InputBox("Anos ?")
+    j = 0.1
+    montante = q
+    For i = 1 To n - 1
+        montante = montante + montante * j
+    Next
+    MsgBox (montante & " €")
+    
+End Sub
+Sub FormulaNicomachus()
+    Dim n As Integer, Termo As Integer, res As Integer, numMembros As Integer
+    
+    n = InputBox("Numero: ")
+    Termo = (n ^ 2) - n + 1
+    res = 0
+    numMembros = 1
+    Do While (numMembros <= n)
+        res = res + Termo
+        Termo = Termo + 2
+        numMembros = numMembros + 1
+    Loop
+    MsgBox (res)
+End Sub
+
+Sub area()
+    
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
