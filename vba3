@@ -1,0 +1,146 @@
+Option Explicit
+
+Sub tabuada()
+    Dim cont As Integer, x As Integer, res As String
+        
+    x = Val(InputBox("Tabuada dos?"))
+    'VALIDAÇÃO de dados: ???????????????
+    
+    'cálculo:
+    res = "Tabuada dos " & x & vbNewLine    'valor inicial
+    cont = 1
+    Do
+        res = res & x & " * " & cont & " = " & cont * x & vbNewLine
+        cont = cont + 1
+    Loop Until (cont > 10 And x < 9)
+    MsgBox (res)
+End Sub
+
+
+
+Public Sub Somatorio()
+
+    Dim n As Integer, res As Double, a As Integer, resFinal As Double
+    
+    resFinal = 0
+    a = 1
+    n = InputBox("Digite um numero interiro positivo para n.", "Somatorio")
+    Do While (n > 0 And a <= n)
+        res = 3.1416 / (-a)
+        a = a + 1
+        resFinal = resFinal + res
+    Loop
+    MsgBox (resFinal)
+
+End Sub
+
+Public Sub Estatística()
+
+    Dim a As Long, novoDado As Long, soma As Long, produto As Long, contagem As Integer, maximo As Integer, minimo As Integer
+    
+    Worksheets("Números").Range("B3:B97").ClearContents
+    
+    a = 1
+    novoDado = 1
+    soma = 0
+    produto = 1
+    
+    Do While (novoDado <> 0)
+        novoDado = InputBox("Digite o " & a & " º número", "Registo de dados")
+        If (novoDado <> 0) Then
+            Cells(2 + a, "B") = novoDado
+            
+            soma = soma + novoDado
+            
+            If (novoDado <> 0) Then
+                produto = produto * novoDado
+            End If
+            If (novoDado > Cells(a, "B")) Then
+                maximo = novoDado
+            ElseIf (novoDado <= Cells(a + 1, "B")) Then
+                minimo = novoDado
+            End If
+            contagem = a   'porque no inicio o contador a é igual a 1
+            a = a + 1
+        End If
+    Loop
+    
+    Cells(5, "E") = soma
+    Cells(2, "E") = contagem
+    Cells(7, "E") = produto
+    Cells(3, "E") = maximo
+    Cells(4, "E") = minimo
+    Cells(6, "E") = soma / contagem
+    
+    
+End Sub
+
+Public Sub ParEImpar()
+
+    Dim a As Integer, contadorPar As Integer, contadorImpar As Integer
+    
+    a = 0
+    contadorPar = 0
+    contadorImpar = 0
+    
+    Do
+        If (Cells(3 + a, "B") Mod 2 = 0 And Cells(3 + a, "B") <> 0) Then
+            contadorPar = contadorPar + 1
+        ElseIf (Cells(3 + a, "B") Mod 2 <> 0 And Cells(3 + a, "B") <> 0) Then
+            contadorImpar = contadorImpar + 1
+        End If
+    a = a + 1
+    Loop Until (a = Cells(2, "E"))
+    Cells(9, "E") = contadorPar * 100 / (contadorPar + contadorImpar)
+    Cells(10, "E") = contadorImpar * 100 / (contadorPar + contadorImpar)
+
+End Sub
+Public Sub soma()
+    Dim i As Integer, soma As Integer
+    i = 0
+    soma = 0
+    
+    Do While (Cells(3 + i, "B") <> 0)
+        soma = soma + Cells(3 + i, "B")
+        i = i + 1
+    Loop
+    Cells(3 + i, "B") = "SOMA: " & soma
+
+End Sub
+Public Sub TabelaParImpar()
+    Dim i As Integer, a As Integer, b As Integer, numValores As Integer, numPar As Integer, numimpar As Integer
+    Worksheets("Números").Range("G4:H97").ClearCo00
+    ntents
+    
+    i = 0
+    a = 1
+    b = 1
+    numValores = Cells(2, "E")
+
+    Do While (Cells(3 + i, "B") <> 0)
+        If (Cells(3 + i, "B") Mod 2 = 0) Then
+            Cells(3 + a, "G") = Cells(3 + i, "B")
+            a = a + 1
+        Else
+            Cells(3 + b, "H") = Cells(3 + i, "B")
+            b = b + 1
+        End If
+    i = i + 1
+    Loop
+    
+End Sub
+
+
+Public Sub NumBissexto()
+
+    Dim ano As Integer, a As Integer, res As Integer
+    
+    a = 1
+    For ano = 1900 To 2012 Step 1
+        If ((ano Mod 4 = 0 & ano Mod 100 <> 0) Or (ano Mod 400 = 0)) Then
+            Cells(2 + a, "J") = ano
+            a = a + 1
+        End If
+
+    Next
+End Sub
