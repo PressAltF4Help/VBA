@@ -1,0 +1,106 @@
+Option Explicit
+
+'Por definição, 0, 1 e - 1 não são números primos.
+Function primo(ByVal x As Integer) As Boolean
+    Dim div As Integer, k As Integer
+    div = 0
+    For k = 1 To x / 2
+        If (x Mod k = 0) Then
+            div = div + 1
+        End If
+    Next
+    If (div = 1) Then
+        primo = True
+    Else
+        primo = False
+    End If
+End Function
+
+Sub primos_AB()
+    Dim a As Integer, B As Integer, contp As Integer, i As Integer
+    contp = 0
+    a = InputBox("Valor de Início: ")
+    B = InputBox("Valor de Fim: ")
+    For i = a To B
+        If (primo(i)) Then
+            contp = contp + 1
+        End If
+    Next
+    MsgBox ("Total de nºs primos: " & contp)
+End Sub
+
+Sub Sortear()
+    Dim selecao As Range, num As Range, i As Integer, valores As Integer, numTotais As Integer, total As Integer
+    Set selecao = Selection
+    
+    total = 0
+    For Each num In selecao
+        i = WorksheetFunction.RandBetween(10, 20)
+        num = i
+        total = total + 1
+    Next
+    Call Percentagem(i, total)
+End Sub
+
+Sub Percentagem(elemento, elementosTotal)
+    Const MAX_ELEMENTOS = 100
+    Dim lista(MAX_ELEMENTOS) As Integer, a As Integer, res As Integer
+    
+    res = 0
+    For a = 0 To elementosTotal
+        lista(a) = elemento
+        If (lista(a) >= 15) Then
+            res = res + 1
+        End If
+    Next
+    MsgBox (res)
+End Sub
+Function Classifica(ByVal nota As Double)
+    Select Case nota
+        Case 0 To 7
+            Classifica = "Mau"
+        Case 7 To 10
+            Classifica = "Insuficiente"
+        Case 10 To 14
+            Classifica = "Suficiente"
+        Case 14 To 17
+            Classifica = "Bom"
+        Case 17 To 20
+            Classifica = "Muito Bom"
+        Case Else
+            Classifica = "Nota incorreta"
+        End Select
+End Function
+Function Calcular(ByVal num1 As Integer, ByVal num2 As Integer, operador As String) As Double
+    Dim res As Double
+    Select Case operador:
+        Case "+"
+            res = num1 + num2
+        Case "-"
+            res = num1 - num2
+        Case "*"
+            res = num1 * num2
+        Case "/"
+            res = num1 / num2
+        End Select
+        Calcular = res
+End Function
+Sub main()
+    Dim a As Integer
+    a = InputBox("Número: ")
+    Call Produto(a)
+End Sub
+Sub Produto(x As Integer)
+    Dim contador As Integer, multiplo As Integer, res As Long
+    multiplo = 1
+    res = 1
+    For contador = 1 To x
+        If (contador Mod 5 = 0) Then
+            multiplo = contador
+        Else
+            multiplo = 1
+        End If
+        res = res * multiplo
+    Next
+    MsgBox (res)
+End Sub
