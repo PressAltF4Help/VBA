@@ -1,0 +1,284 @@
+ption Explicit
+Option Base 1 '«««««««
+
+Dim vec(10) As Integer 'variável global!
+
+Const MAX = 20
+
+Sub ledadosparavector()
+Dim x As Integer, res As Integer
+For x = 1 To 10
+    vec(x) = Val(Cells(3, x + 1))
+Next
+End Sub
+
+Sub DizerVetor()
+    Dim a As Integer, res As String
+    Call ledadosparavector
+    For a = 1 To 10
+        res = res & vbNewLine & vec(a)
+    Next
+    MsgBox (res)
+End Sub
+
+Function dizerVezesRepetidas(ByVal n As Integer) As Integer
+     Dim a As Integer, numRepetidos As Integer
+     Call ledadosparavector
+     For a = 1 To 10
+        If (n = vec(a)) Then
+            numRepetidos = numRepetidos + 1
+        End If
+     Next
+     dizerVezesRepetidas = numRepetidos
+End Function
+Function CalcularMedia()
+    Dim a As Integer, soma As Integer
+    Call ledadosparavector
+    For a = 1 To 10
+        soma = soma + vec(a)
+    Next
+    CalcularMedia = soma / 10
+
+End Function
+
+Sub Principal_VT()
+    Dim opcao As Integer, n As Integer
+    n = InputBox("Numero(X)")
+    Cells(6, "E") = dizerVezesRepetidas(n)
+    Cells(7, "E") = CalcularMedia()
+    'Parte TPC
+    Cells(8, "E") = acimaDaMedia(CalcularMedia())
+    Cells(9, "E") = CalcularDesvioPadrao(CalcularMedia())
+    
+    
+End Sub
+
+
+
+Sub alinea4()
+    Dim vetor(MAX) As Integer, dimensao As Integer
+    dimensao = InputBox("tamanho")
+    If (dimensao <> 0 & dimensao < 10) Then
+        Call lerElementos(vetor, dimensao)
+        Call ImprimirElementos(vetor, dimensao)
+        Call ImprimirMenor(vetor, dimensao)
+    End If
+End Sub
+
+
+Sub lerElementos(ByRef v() As Integer, tamanho As Integer)
+    Dim i As Integer
+
+    For i = 1 To tamanho
+        v(i) = Val(InputBox("Digite o elemento nº " & i))
+    Next
+End Sub
+
+Sub ImprimirElementos(vv() As Integer, dimension As Integer)
+    Dim a As Integer, res As String
+    
+    For a = 1 To dimension
+        res = res & vbNewLine & vv(a)
+    Next
+    MsgBox (res)
+End Sub
+
+Sub ImprimirMenor(vvv() As Integer, numElementos As Integer)
+    
+    Dim contador As Integer, res As Integer
+    
+    res = vvv(1)
+    For contador = 1 To numElementos
+        If (vvv(contador) < vvv(1)) Then
+            res = vvv(contador)
+        End If
+    Next
+    MsgBox ("Menor elemento: " & res)
+End Sub
+
+'-------------------TPC-------------------
+Function acimaDaMedia(media) As Integer
+    Dim a As Integer, num As Integer
+    For a = 1 To 10
+        If (vec(a) > media) Then
+            num = num + 1
+        End If
+    Next
+    acimaDaMedia = num
+End Function
+
+Function CalcularDesvioPadrao(media) As Double
+    Dim i As Integer, somatorio As Double, argumento As Double
+    
+    For i = 1 To 10
+        somatorio = somatorio + (vec(i) * i - media)
+    Next
+    argumento = (0.1 * somatorio)
+    CalcularDesvioPadrao = Sqr(argumento)
+End Function
+
+Option Base 1 '«««««««
+
+Dim mat(3, 3) As Integer 'variável global!
+
+Sub leMat()
+Dim x As Integer, y As Integer
+For x = 1 To 3
+    For y = 1 To 3
+        mat(x, y) = Worksheets("Matrizes").Cells(x + 1, y)
+    Next y
+Next x
+End Sub
+
+Sub ImprimirMatriz()
+    Dim res As String, l As Integer, c As Integer
+    Call leMat
+    res = ""
+    For l = 1 To 3
+        For c = 1 To 3
+            res = res & "    " & mat(l, c)
+        Next
+    res = res & vbNewLine
+    Next
+    MsgBox (res)
+End Sub
+
+Function mediaDiagonal()
+    Dim res As Long, numLinhas As Integer, numColunas As Integer
+    res = 1
+    Call leMat
+    For numLinhas = 1 To 3
+        For numColunas = 1 To 3
+            res = res * mat(numLinhas, numColunas)
+        Next
+    Next
+    
+    mediaDiagonal = res
+End Function
+
+Sub ImprimirElementoMaior()
+    Dim maior As Integer, numLinhas As Integer, numColunas As Integer, x As Integer, y As Integer
+    Call leMat
+    maior = mat(1, 1)
+    For numLinhas = 1 To 3
+        For numColunas = 1 To 3
+            If (maior < mat(numLinhas, numColunas)) Then
+                x = numLinhas
+                y = numColunas
+                maior = mat(x, y)
+            End If
+        Next
+    Next
+    
+    MsgBox ("Maior: " & maior & "(" & x & "/" & y & ")")
+End Sub
+
+Function ProcurarValor(ByVal valor As Integer) As Boolean
+    Dim x As Integer, y As Integer
+
+    Call leMat
+    For x = 1 To 3
+        For y = 1 To 3
+            If (valor = mat(x, y)) Then
+                ProcurarValor = True
+            Else
+                ProcurarValor = False
+            End If
+        Next
+    Next
+End Function
+
+Sub ImprimirDiagonal()
+    
+    Dim vetor(3) As Integer, a As Integer, res As String    'nao tenho a certeza se é isto que pede
+    Call leMat
+    For a = 1 To 3
+         res = res & "  " & mat(a, a)
+    Next
+    MsgBox (res)
+End Sub
+
+Sub principal_MT()
+    Dim opcao As Integer, valorAProcurar As Integer
+    Do Until (opcao = 6)
+        opcao = InputBox("| Presse uma das seguintes opcoes |" & vbNewLine & "     [1]---------Imprimir Matriz" & vbNewLine & "     [2]---------Media Diagonal" & vbNewLine & "     [3]---------Maior Elemento" & vbNewLine & "     [4]---------Procurar Valor" & vbNewLine & "     [5]---------Imprimir Diagonal" & vbNewLine & "     [6]---------Sair")
+        Select Case opcao
+            Case 1:
+                Call ImprimirMatriz
+            Case 2:
+                MsgBox (mediaDiagonal())
+            Case 3:
+                Call ImprimirElementoMaior
+            Case 4:
+                valorAProcurar = Val(InputBox("valor a procurar? "))
+                MsgBox (ProcurarValor(valorAProcurar))
+            Case 5:
+                Call ImprimirDiagonal
+            Case 6:
+                MsgBox ("adeus")
+            Case Else:
+                MsgBox ("opcao invalida...")
+        End Select
+    Loop
+End Sub
+
+
+'------------------------TPC----------------------
+
+
+Function SomaDiagonalSec(matriz As Range, dimensao As Integer) As Integer ' matriz as range para se poder sublinhar no excel
+    Dim l As Integer, c As Integer, res As Integer
+    c = 3
+    For l = 1 To dimensao
+        res = res + matriz(l, c)
+        c = c - 1
+    Next
+    SomaDiagonalSec = res
+End Function
+
+Function MesesPorExtenso(num As Integer) As String
+    Dim lista(12) As String, res As String
+    lista(1) = "janeiro"
+    lista(2) = "fevereiro"
+    lista(3) = "março"
+    lista(4) = "abril"
+    lista(5) = "maio"
+    lista(6) = "junho"
+    lista(7) = "julho"
+    lista(8) = "agosto"
+    lista(9) = "setembro"
+    lista(10) = "outubro"
+    lista(11) = "novembro"
+    lista(12) = "dezembro"
+    res = lista(num)
+    MesesPorExtenso = res
+End Function
+
+Function ExisteOuNao(vetor As Range, dimensao, num As Integer) As Boolean
+    Dim i As Integer
+    
+    For i = 1 To dimensao
+    If (vetor(i) = num) Then
+        ExisteOuNao = True                     'REFAZER
+    Else
+        ExisteOuNao = False
+    End If
+    Next
+End Function
+
+
+Function TrianguloSEsquerda(metriz As Range) As Integer
+    Dim i As Integer, a As Integer, res As Integer
+    
+    For i = 1 To 3
+        For a = 1 To (4 - i)
+            res = res + mat(i, a)
+        Next
+    Next
+    TrianguloSEsquerda = res
+End Function
+
+
+
+
+
